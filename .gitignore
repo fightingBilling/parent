@@ -41,3 +41,12 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# eclipse
+*.project
+*.classpath
+*.settings
+*.class
+
+# maven-build
+target
