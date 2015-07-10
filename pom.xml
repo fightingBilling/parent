@@ -19,7 +19,7 @@
 		<module>infrastructure</module>
 		<module>domain</module>
 		<module>application</module>
-		<module>interface</module>
+		<module>interfaces</module>
 	</modules>
 
 	<name>parent</name>
