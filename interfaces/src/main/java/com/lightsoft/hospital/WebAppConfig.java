@@ -20,9 +20,18 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+
+import com.lightsoft.hospital.interfaces.hello.dto.Account;
+import com.lightsoft.hospital.interfaces.hello.dto.User;
+import com.lightsoft.hospital.interfaces.hello.view.JsonViewResolver;
+import com.lightsoft.hospital.interfaces.hello.view.MarshallingXmlViewResolver;
 
 @Profile("web")
 @Configuration
@@ -38,6 +47,10 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	// @Autowired
 	// private TomcatEmbeddedServletContainerFactory servletFactory;
 
+	/**
+	 * 配置tomcat容器属性
+	 * @return
+	 */
 	@Bean
 	@Primary
 	public ServerProperties serverProperties() {
@@ -45,15 +58,41 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		// serverProperties.setPort(8088);
 		return serverProperties;
 	}
+	
+	@Bean(name = "marshallingXmlViewResolver")
+	public ViewResolver getMarshallingXmlViewResolver() {
+		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+		marshaller.setClassesToBeBound(User.class, Account.class);
+		return new MarshallingXmlViewResolver(marshaller);
+	}
+	
+	@Bean(name = "jsonViewResolver")
+	public ViewResolver getJsonViewResolver() {
+		return new JsonViewResolver();
+	}
+	
+	/**
+	 * 自定义CNVR
+	 * @param manager
+	 * @return
+	 */
+	@Bean
+	public ViewResolver contentNegotiatingViewResolver(
+			ContentNegotiationManager manager) {
+		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+		resolver.setContentNegotiationManager(manager);
+		return resolver;
+	}
 
 	@Override
 	public void configureContentNegotiation(
 			ContentNegotiationConfigurer configurer) {
 		configurer.favorPathExtension(true).favorParameter(true)
 				.parameterName("mediaType").ignoreAcceptHeader(true)
-				.useJaf(false).defaultContentType(MediaType.APPLICATION_JSON)
-				.mediaType("xml", MediaType.APPLICATION_XML)
-				.mediaType("json", MediaType.APPLICATION_JSON);
+					.useJaf(false).defaultContentType(MediaType.TEXT_HTML)
+						.mediaType("html", MediaType.TEXT_HTML)
+							.mediaType("xml", MediaType.APPLICATION_XML)
+								.mediaType("json", MediaType.APPLICATION_JSON);
 
 	}
 

@@ -1,5 +1,8 @@
 package com.lightsoft.hospital.interfaces.hello.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class User {
 
 	private String name;

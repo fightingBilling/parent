@@ -1,20 +1,23 @@
 package com.lightsoft.hospital.interfaces.hello.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.lightsoft.hospital.interfaces.hello.dto.Account;
 import com.lightsoft.hospital.interfaces.hello.dto.User;
 
-@RestController
+@Controller
 @RequestMapping("api")
 public class UserController {
 
 	@RequestMapping("userInfo")
-	public User userInfo() {
+	public String userInfo(Model model) {
 		Account account = new Account("account", "password", 20);
 		User user = new User("张三", "13333333333", "男", "中南海", account);
-		return user;
+		model.addAttribute("userInfo",user);
+		model.addAttribute("myinfo",user);
+		return "userInfo";
 	}
 
 }

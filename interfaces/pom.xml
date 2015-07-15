@@ -39,27 +39,25 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-
-			<!-- 如果要使用其他的日志系统，则需要排除logback依赖，logback是spring-boot的默认日志处理器 -->
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
+			<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
-		<!-- 使用log4j2 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
+			<artifactId>spring-boot-starter-ws</artifactId>
 		</dependency>
+
+		<!-- 使用log4j2 -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-log4j2</artifactId> -->
+<!-- 		</dependency> -->
 
 		<!-- 解析xml -->
 		<dependency>
